@@ -8,6 +8,7 @@
 #include "ComponentUserWidget.h"
 #include "TextUWComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetTree.h"
 #include "SampleWidgets.generated.h"
 
 /**
@@ -121,6 +122,9 @@ private:
 };
 
 
+/**
+ *
+ */
 UCLASS()
 class UMainWidget : public UUserWidget
 {
@@ -141,6 +145,20 @@ public:
 		{
 			LoremLipsum->Collapser->Collapse();
 		});
+
+		ResetButton->ClickListener->OnClicked.AddWeakLambda(this, [this]()
+		{
+			WidgetTree->ForEachWidget([](UWidget* Each)
+			{
+				if (auto AsComponentUserWidget = Cast<UComponentUserWidget>(Each))
+				{
+					if (auto Collapser = AsComponentUserWidget->FindComponentByClass<UCollapserUWComponent>())
+					{
+						Collapser->Expand();
+					}
+				}
+			});
+		});
 	}
 	// ~UUserWidget
 
@@ -156,4 +174,7 @@ private:
 	
 	UPROPERTY(meta=(BindWidget))
 	UPanelWidget* NoticePanel;
+	
+	UPROPERTY(meta=(BindWidget))
+	USimpleButton* ResetButton;
 };
