@@ -8,6 +8,14 @@
 #include "TextUWComponent.generated.h"
 
 
+/**
+ * UTextBlock 한 개를 컴포넌트화 한 클래스
+ * 
+ * UTextBlock의 FText에 대한 여러가지 편의함수를 제공하고 에디터 블루프린트에서 기본 텍스트를 설정할 수 있게 합니다.
+ * @see UTextUWComponent::DefaultText
+ * 
+ * 사용 전 반드시 UTextUWComponent::Init을 호출해야 합니다.
+ */
 UCLASS()
 class COMPONENTWIDGET_API UTextUWComponent : public UUserWidgetComponent
 {

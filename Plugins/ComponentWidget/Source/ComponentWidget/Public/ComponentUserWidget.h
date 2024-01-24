@@ -8,6 +8,10 @@
 #include "ComponentUserWidget.generated.h"
 
 
+/**
+ * UUserWidget에서도 Composition을 사용하기 위한 클래스
+ * @see UComponentUserWidget
+ */
 UCLASS(DefaultToInstanced, Within=ComponentUserWidget)
 class COMPONENTWIDGET_API UUserWidgetComponent : public UObject
 {
@@ -27,6 +31,14 @@ public:
 };
 
 
+/**
+ * AActor에서 UActorComponent를 사용해서 Composition을 구현한 것처럼 UUserWidget에서도 Composition을 구현합니다.
+ * Composition을 하기 위해서는 UUserWidget 대신 이 클래스를 상속하고 UUserWidgetComponent를 상속하는
+ * 컴포넌트 클래스를 Default Subobject로 생성하여 멤버 UPROPERTY로 저장합니다.
+ *
+ * 컴포넌트에 따라 사용 전 초기화가 필요한 경우에는 AActor와 마찬가지로 UComponentUserWidget::InitializeComponent에서
+ * 초기화할 수 있습니다. 
+ */
 UCLASS()
 class COMPONENTWIDGET_API UComponentUserWidget : public UUserWidget
 {

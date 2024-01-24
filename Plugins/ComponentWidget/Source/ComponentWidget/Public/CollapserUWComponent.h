@@ -10,6 +10,12 @@
 #include "CollapserUWComponent.generated.h"
 
 
+/**
+ * UUserWidget 내의 Size Box와 같은 사이즈 관련 위젯의 값을 조작하여
+ * 위젯이 닫고 열리는 것과 같은 효과를 내는 컴포넌트
+ *
+ * 사용 전 반드시 UCollapserUWComponent::Init을 호출해야 합니다.
+ */
 UCLASS()
 class COMPONENTWIDGET_API UCollapserUWComponent : public UUserWidgetComponent
 {

@@ -7,6 +7,9 @@
 #include "ClickListenerUWComponent.generated.h"
 
 
+/**
+ * 위젯이 클릭 입력을 받을 때 이벤트를 발생시키는 컴포넌트
+ */
 UCLASS()
 class COMPONENTWIDGET_API UClickListenerUWComponent : public UUserWidgetComponent
 {
