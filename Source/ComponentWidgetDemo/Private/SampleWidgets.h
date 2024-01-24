@@ -74,75 +74,51 @@ private:
 };
 
 
-// /**
-//  *
-//  */
-// UCLASS()
-// class USimpleButtonWithText : public UKmUserWidget
-// {
-// 	GENERATED_BODY()
-//
-// public:
-// 	UPROPERTY(VisibleAnywhere)
-// 	UKmClickListener* ClickListener;
-// 	
-// 	UPROPERTY(VisibleAnywhere)
-// 	UKmTextContainer* TextContainer;
-// 	
-// 	USimpleButtonWithText()
-// 	{
-// 		ClickListener = CreateDefaultSubobject<UKmClickListener>(TEXT("ClickListener"));
-// 		TextContainer = CreateDefaultSubobject<UKmTextContainer>(TEXT("TextContainer"));
-// 	}
-//
-// 	// UKmUserWidget
-// 	virtual void InitializeComponent() override
-// 	{
-// 		TextContainer->Init(Text);
-// 	}
-// 	// ~UKmUserWidget
-//
-// private:
-// 	UPROPERTY(meta=(BindWidget))
-// 	UTextBlock* Text;
-// };
-//
-//
-// /**
-//  *
-//  */
-// UCLASS()
-// class UFoldableButton : public UKmUserWidget
-// {
-// 	GENERATED_BODY()
-//
-// public:
-// 	UPROPERTY(VisibleAnywhere)
-// 	UKmClickListener* ClickListener;
-// 	
-// 	UPROPERTY(VisibleAnywhere)
-// 	UKmAnimatedCollapser* Collapser;
-// 	
-// 	UFoldableButton()
-// 	{
-// 		ClickListener = CreateDefaultSubobject<UKmClickListener>(TEXT("ClickListener"));
-// 		Collapser = CreateDefaultSubobject<UKmAnimatedCollapser>(TEXT("Collapser"));
-// 	}
-// 	
-// 	// UKmUserWidget
-// 	virtual void InitializeComponent() override
-// 	{
-// 		Collapser->Init(SizeBox, bHorizontal);
-// 	}
-// 	// ~UKmUserWidget
-//
-// private:
-// 	UPROPERTY(meta=(BindWidget))
-// 	USizeBox* SizeBox;
-// 	
-// 	UPROPERTY(EditAnywhere)
-// 	bool bHorizontal = false;
-// };
+/**
+ *
+ */
+UCLASS()
+class UDismissableNotice : public UComponentUserWidget
+{
+	GENERATED_BODY()
+	
+public:
+	UPROPERTY(VisibleAnywhere)
+	UTextUWComponent* TextComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	UClickListenerUWComponent* ClickListener;
+	
+	UPROPERTY(VisibleAnywhere)
+	UCollapserUWComponent* Collapser;
+	
+	UDismissableNotice()
+	{
+		TextComponent = CreateDefaultSubobject<UTextUWComponent>(TEXT("TextComponent"));
+		ClickListener = CreateDefaultSubobject<UClickListenerUWComponent>(TEXT("ClickListener"));
+		Collapser = CreateDefaultSubobject<UCollapserUWComponent>(TEXT("Collapser"));
+	}
+
+	// UComponentUserWidget
+	virtual void InitializeComponent() override
+	{
+		TextComponent->Init(Text);
+		Collapser->Init(SizeBox, true);
+
+		ClickListener->OnClicked.AddWeakLambda(this, [this]()
+		{
+			Collapser->Collapse();
+		});
+	}
+	// ~UComponentUserWidget
+
+private:
+	UPROPERTY(meta=(BindWidget))
+	UTextBlock* Text;
+	
+	UPROPERTY(meta=(BindWidget))
+	USizeBox* SizeBox;
+};
 
 
 UCLASS()
@@ -177,4 +153,7 @@ private:
 	
 	UPROPERTY(meta=(BindWidget))
 	USimpleButton* CollapseLoremButton;
+	
+	UPROPERTY(meta=(BindWidget))
+	UPanelWidget* NoticePanel;
 };
