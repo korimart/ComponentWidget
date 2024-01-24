@@ -173,8 +173,5 @@ private:
 	USimpleButton* CollapseLoremButton;
 	
 	UPROPERTY(meta=(BindWidget))
-	UPanelWidget* NoticePanel;
-	
-	UPROPERTY(meta=(BindWidget))
 	USimpleButton* ResetButton;
 };
